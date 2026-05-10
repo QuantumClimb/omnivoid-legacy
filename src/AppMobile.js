@@ -3434,17 +3434,17 @@ export class App {
   createGalleryContent() {
     // Gallery images list (from public/gallery)
     const galleryImages = [
-      'ALLIANCE.png',
-      'E1.png',
-      'E1_W.png',
-      'E2.png',
-      'E3.png',
-      'E3_W.png',
-      'E4.png',
-      'E7.jpg',
-      'gig poster — post (1).png',
-      'workshop poster — post.png',
-      'workshop.png'
+      'alliance.png',
+      'e1.png',
+      'e1_w.png',
+      'e2.png',
+      'e3.png',
+      'e3_w.png',
+      'e4.png',
+      'e7.jpg',
+      'gig_poster_1.png',
+      'workshop_poster.png',
+      'workshop_main.png'
     ];
 
     // Generate image descriptions
