@@ -3618,7 +3618,7 @@ export class App {
           
           <!-- Registration Button -->
           <div style="text-align: center; margin: 12px 0;">
-            <a href="https://docs.google.com/forms/d/1QcCLVs58SM5lbpqahYUkllqiNIST3-7Cd1EuvJXBMxc/edit" 
+            <a href="https://forms.gle/tbbp7vZfwxHT9aPx6" 
                target="_blank" 
                style="
                  display: inline-block;
@@ -3716,22 +3716,22 @@ export class App {
               <div><strong>Visuals:</strong> Real-time audio-reactive art</div>
             </div>
           </div>
-          <a href="https://outworld.fanpit.live/events/NYMOnzeS" target="_blank" style="
+          <a style="
             display: block;
             text-align: center;
             padding: 8px 16px;
-            background: #99ccff;
-            color: #000000;
+            background: #333333;
+            color: #666666;
             text-decoration: none;
             border-radius: 4px;
             font-size: 10px;
             font-weight: bold;
             font-family: 'Space Mono', monospace;
             transition: all 0.2s;
-            cursor: pointer;
-            opacity: 1;
-          " title="Get tickets on Fanpit">
-            🎫 GET TICKETS - FANPIT
+            cursor: not-allowed;
+            opacity: 0.5;
+          " title="Tickets unavailable">
+            🎫 TICKETS UNAVAILABLE
           </a>
         </div>
         
@@ -3761,7 +3761,7 @@ export class App {
               <div><strong>Level:</strong> Intermediate to Advanced</div>
             </div>
           </div>
-          <a href="https://docs.google.com/forms/d/1QcCLVs58SM5lbpqahYUkllqiNIST3-7Cd1EuvJXBMxc/edit" target="_blank" style="
+          <a href="https://forms.gle/tbbp7vZfwxHT9aPx6" target="_blank" style="
             display: block;
             text-align: center;
             padding: 8px 16px;
