@@ -192,7 +192,7 @@ export class App {
     
     // Copyright text
     const copyright = document.createElement('div');
-    copyright.textContent = '© 2025 OMNIVOID LABS';
+    copyright.innerHTML = '© 2025 OMNIVOID LABS | <a href="https://royvillemedia.in/" target="_blank" style="color: #99ccff; text-decoration: none; pointer-events: auto;">ROYVILLE MEDIA</a>';
     copyright.style.cssText = `
       font-size: 10px;
       color: #99ccff;
@@ -3565,7 +3565,7 @@ export class App {
           <div style="margin-bottom: 12px; padding: 8px; background: #1a1a1a; border: 1px solid #333; border-radius: 4px;">
             <div style="font-size: 10px; color: #66aaff; font-weight: bold; margin-bottom: 4px;">Group Drone Jam Session</div>
             <div style="font-size: 9px; color: #99ccff; line-height: 1.3;">
-              Collaborative creation of ambient soundscapes through collective improvisation and experimental techniques.
+              Collaborative creation of ambient soundscapes through improvisational and experimental techniques.
             </div>
           </div>
           
@@ -4880,7 +4880,7 @@ The conundrum lies in the space between digital and analog, between past and fut
         // Fallback to placeholder content if fetch fails
         this.contactContent = {
           title: 'CONTACT',
-          content: `Connect with the OMNIVOID collective. We're always interested in collaborations and feedback.
+          content: `Connect with the OMNIVOID labs. We're always interested in collaborations and feedback.
 
 Email: contact@omnivoid.net
 GitHub: github.com/QuantumClimb/omnivoid
