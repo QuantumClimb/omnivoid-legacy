@@ -1516,6 +1516,7 @@ export class App {
     
     // Top-left positioning - safe from all other elements (mobile-optimized)
     this.asciiVoidButton.style.cssText = `
+      display: none !important; /* Hidden per client request - do not delete */
       position: fixed;
       top: 15px;
       left: 15px;
@@ -1563,8 +1564,9 @@ export class App {
 
     // Add to document
     document.body.appendChild(this.asciiVoidButton);
+    this.asciiVoidButton.style.display = 'none'; // Hidden per client request - do not delete
     
-    console.log('✅ ASCIIVOID button created in top-left corner (Mobile)');
+    console.log('✅ ASCIIVOID button created in top-left corner (hidden per client request on Mobile)');
   }
 
   /**

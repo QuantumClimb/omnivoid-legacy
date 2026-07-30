@@ -189,4 +189,9 @@ select.animation-select option {
   background: var(--bg-color);
   color: var(--fg-color);
   padding: 3px;
-} 
+}
+
+/* Hidden per client request - do not delete */
+.asciivoid-button {
+  display: none !important;
+}
