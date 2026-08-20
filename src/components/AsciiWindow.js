@@ -5,7 +5,7 @@ import { Component } from './Base.js';
  * Based on RetroWindow but optimized for iframe content
  */
 export class AsciiWindow extends Component {
-  constructor(id = 'ascii-window', title = 'ASCIIVOID', url = 'https://asciivoid.pages.dev/', onClose = null) {
+  constructor(id = 'ascii-window', title = 'SHOP', url = 'https://project2050.shop/', onClose = null) {
     super();
     this.id = id;
     this.title = title;
@@ -44,10 +44,10 @@ export class AsciiWindow extends Component {
       max-width: ${isDesktop ? '1200px' : '95vw'};
       height: ${isDesktop ? '75vh' : '80vh'};
       max-height: 85vh;
-      background-color: #111111;
-      border: 1px solid #00FF22;
+      background-color: var(--bg-color);
+      border: 1px solid var(--track-color);
       box-shadow: 
-        0 0 20px rgba(0, 255, 34, 0.3),
+        0 0 20px rgba(0, 0, 0, 0.3),
         4px 4px 8px rgba(0, 0, 0, 0.5);
       font-family: 'Space Mono', monospace;
       font-size: ${isDesktop ? '12px' : '14px'};
@@ -55,7 +55,7 @@ export class AsciiWindow extends Component {
       display: none;
       opacity: 0;
       transition: opacity 0.2s ease;
-      color: #00FF22;
+      color: var(--fg-color);
     `;
 
     // Create title bar
@@ -63,8 +63,8 @@ export class AsciiWindow extends Component {
     this.titleBar.className = 'ascii-window-titlebar';
     this.titleBar.style.cssText = `
       height: 32px;
-      background: linear-gradient(90deg, #000000 0%, #001a00 100%);
-      border-bottom: 1px solid #00FF22;
+      background: var(--panel-bg);
+      border-bottom: 1px solid var(--track-color);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -77,10 +77,10 @@ export class AsciiWindow extends Component {
     this.titleText = document.createElement('span');
     this.titleText.textContent = this.title;
     this.titleText.style.cssText = `
-      color: #00FF22;
+      color: var(--fg-color);
       font-weight: bold;
       font-size: 14px;
-      text-shadow: 0 0 5px rgba(0, 255, 34, 0.5);
+      text-shadow: none;
       flex-grow: 1;
       padding-left: 4px;
       font-family: 'Space Mono', monospace;
@@ -94,8 +94,8 @@ export class AsciiWindow extends Component {
       width: 24px;
       height: 24px;
       background-color: transparent;
-      color: #00FF22;
-      border: 1px solid #00FF22;
+      color: var(--fg-color);
+      border: 1px solid var(--track-color);
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
@@ -114,8 +114,8 @@ export class AsciiWindow extends Component {
     this.body.className = 'ascii-window-body';
     this.body.style.cssText = `
       height: calc(100% - 34px);
-      background-color: #000000;
-      border: 1px solid #00FF22;
+      background-color: var(--bg-color);
+      border: 1px solid var(--track-color);
       margin: 1px;
       overflow: hidden;
       padding: 0;
@@ -129,15 +129,15 @@ export class AsciiWindow extends Component {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      color: #00FF22;
+      color: var(--fg-color);
       font-family: 'Space Mono', monospace;
       font-size: 14px;
       text-align: center;
       z-index: 1;
     `;
     this.loadingIndicator.innerHTML = `
-      <div style="margin-bottom: 10px;">Loading ASCIIVOID...</div>
-      <div style="font-size: 12px; opacity: 0.7;">Connecting to asciivoid.pages.dev</div>
+      <div style="margin-bottom: 10px;">Loading SHOP...</div>
+      <div style="font-size: 12px; opacity: 0.7;">Connecting to project2050.shop</div>
     `;
 
     // Create iframe
@@ -147,7 +147,7 @@ export class AsciiWindow extends Component {
       width: 100%;
       height: 100%;
       border: none;
-      background: #000000;
+      background: var(--bg-color);
       opacity: 0;
       transition: opacity 0.3s ease;
     `;
@@ -157,17 +157,17 @@ export class AsciiWindow extends Component {
       this.isLoading = false;
       this.loadingIndicator.style.display = 'none';
       this.iframe.style.opacity = '1';
-      console.log('✅ ASCIIVOID iframe loaded successfully');
+      console.log('✅ SHOP iframe loaded successfully');
     };
 
     this.iframe.onerror = () => {
       this.isLoading = false;
       this.loadingIndicator.innerHTML = `
-        <div style="color: #ff4444; margin-bottom: 10px;">Failed to load ASCIIVOID</div>
+        <div style="color: #ff4444; margin-bottom: 10px;">Failed to load SHOP</div>
         <div style="font-size: 12px; opacity: 0.7;">Check your internet connection</div>
         <div style="font-size: 10px; margin-top: 10px; opacity: 0.5;">${this.url}</div>
       `;
-      console.error('❌ Failed to load ASCIIVOID iframe');
+      console.error('❌ Failed to load SHOP iframe');
     };
 
     // Assemble window
@@ -194,23 +194,23 @@ export class AsciiWindow extends Component {
 
     // Close button hover effects - Green theme
     this.closeButton.addEventListener('mouseenter', () => {
-      this.closeButton.style.backgroundColor = '#00FF22';
-      this.closeButton.style.color = '#000000';
+      this.closeButton.style.backgroundColor = 'var(--track-color)';
+      this.closeButton.style.color = 'var(--fg-color)';
     });
 
     this.closeButton.addEventListener('mouseleave', () => {
       this.closeButton.style.backgroundColor = 'transparent';
-      this.closeButton.style.color = '#00FF22';
+      this.closeButton.style.color = 'var(--fg-color)';
     });
 
     this.closeButton.addEventListener('mousedown', () => {
-      this.closeButton.style.backgroundColor = '#006600';
-      this.closeButton.style.color = '#ffffff';
+      this.closeButton.style.backgroundColor = 'var(--thumb-color)';
+      this.closeButton.style.color = 'var(--bg-color)';
     });
 
     this.closeButton.addEventListener('mouseup', () => {
-      this.closeButton.style.backgroundColor = '#00FF22';
-      this.closeButton.style.color = '#000000';
+      this.closeButton.style.backgroundColor = 'var(--track-color)';
+      this.closeButton.style.color = 'var(--fg-color)';
     });
 
     // Dragging functionality
@@ -270,7 +270,7 @@ export class AsciiWindow extends Component {
    * Show the window
    */
   show() {
-    console.log('🎨 Opening ASCIIVOID window');
+    console.log('🎨 Opening SHOP window');
     this.isVisible = true;
     this.element.style.display = 'block';
     
@@ -286,7 +286,7 @@ export class AsciiWindow extends Component {
    * Hide the window
    */
   hide() {
-    console.log('🎨 Closing ASCIIVOID window');
+    console.log('🎨 Closing SHOP window');
     this.isVisible = false;
     this.element.style.opacity = '0';
     

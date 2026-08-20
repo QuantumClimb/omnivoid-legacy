@@ -815,7 +815,7 @@ export class App {
     
     const gigButton = document.createElement('button');
     gigButton.className = 'latest-gig-button';
-    gigButton.innerHTML = '<img src="./public/ascii/V.svg" style="width: 20px; height: 20px; margin-right: 8px; filter: brightness(0) invert(1);" alt="Latest Rituals"> LATEST RITUALS';
+    gigButton.textContent = 'LATEST RITUALS';
     gigButton.title = 'View Latest Rituals';
     gigButton.style.cssText = `
       position: fixed;
@@ -1512,17 +1512,16 @@ export class App {
     // Create the button element
     this.asciiVoidButton = document.createElement('button');
     this.asciiVoidButton.className = 'asciivoid-button';
-    this.asciiVoidButton.textContent = 'ASCIIVOID';
+    this.asciiVoidButton.textContent = 'SHOP';
     
     // Top-left positioning - safe from all other elements (mobile-optimized)
     this.asciiVoidButton.style.cssText = `
-      display: none !important; /* Hidden per client request - do not delete */
       position: fixed;
       top: 15px;
       left: 15px;
-      background: #00FF22;
-      color: #000000;
-      border: 2px solid #00FF22;
+      background: var(--bg-color);
+      color: var(--fg-color);
+      border: 1px solid var(--track-color);
       padding: 8px 14px;
       font-size: 11px;
       font-weight: bold;
@@ -1534,39 +1533,35 @@ export class App {
       text-transform: uppercase;
       letter-spacing: 1px;
       box-shadow: 
-        0 0 20px rgba(0, 255, 34, 0.3),
-        4px 4px 8px rgba(0, 0, 0, 0.5);
+        0 0 10px rgba(0, 0, 0, 0.3),
+        2px 2px 5px rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(10px);
       touch-action: manipulation;
     `;
 
     // Add touch-friendly interactions
     this.asciiVoidButton.addEventListener('touchstart', () => {
-      this.asciiVoidButton.style.backgroundColor = '#00CC1B';
-      this.asciiVoidButton.style.borderColor = '#00CC1B';
+      this.asciiVoidButton.style.backgroundColor = 'var(--track-color)';
+      this.asciiVoidButton.style.borderColor = 'var(--thumb-color)';
       this.asciiVoidButton.style.transform = 'scale(0.95)';
     });
 
     this.asciiVoidButton.addEventListener('touchend', () => {
-      this.asciiVoidButton.style.backgroundColor = '#00FF22';
-      this.asciiVoidButton.style.borderColor = '#00FF22';
+      this.asciiVoidButton.style.backgroundColor = 'var(--bg-color)';
+      this.asciiVoidButton.style.borderColor = 'var(--track-color)';
       this.asciiVoidButton.style.transform = 'scale(1)';
     });
 
     // Add click handler
     this.asciiVoidButton.addEventListener('click', () => {
-      console.log('🎨 ASCIIVOID button clicked (Mobile)');
-      if (!this.asciiWindow) {
-        this.asciiWindow = new AsciiWindow();
-      }
-      this.asciiWindow.toggle();
+      console.log('🎨 SHOP button clicked (Mobile), opening in new tab due to CSP');
+      window.open('https://project2050.shop/', '_blank');
     });
 
     // Add to document
     document.body.appendChild(this.asciiVoidButton);
-    this.asciiVoidButton.style.display = 'none'; // Hidden per client request - do not delete
     
-    console.log('✅ ASCIIVOID button created in top-left corner (hidden per client request on Mobile)');
+    console.log('✅ SHOP button created in top-left corner on Mobile');
   }
 
   /**
@@ -1744,6 +1739,10 @@ export class App {
           2px 2px 4px rgba(0, 0, 0, 0.5);
         position: relative;
       `;
+
+      // Random yellow glow animation
+      const randomDelay = Math.random() * 15;
+      menuItem.style.animation = `randomGlow 15s infinite ${randomDelay}s`;
 
       // Add click handler to open retro window
       menuItem.addEventListener('click', (e) => {
@@ -4721,6 +4720,20 @@ export class App {
       
       // Real PDF papers from the research folder
       const pdfPapers = [
+        {
+          filename: 'Anthropological Theory of Praxis.pdf',
+          title: 'Anthropological Theory of Praxis',
+          description: 'Research paper',
+          url: './docs/Anthropological Theory of Praxis.pdf',
+          thumbnail: null
+        },
+        {
+          filename: 'Kerala Sound Electricals.pdf',
+          title: 'Kerala Sound Electricals',
+          description: 'Research paper',
+          url: './docs/Kerala Sound Electricals.pdf',
+          thumbnail: null
+        },
         {
           filename: 'hampshire-topping-burbano-cifuentes-aubry.pdf',
           title: 'Hampshire Topping Burbano Cifuentes Aubry',

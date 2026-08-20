@@ -191,7 +191,6 @@ select.animation-select option {
   padding: 3px;
 }
 
-/* Hidden per client request - do not delete */
+/* Shop button */
 .asciivoid-button {
-  display: none !important;
 }
