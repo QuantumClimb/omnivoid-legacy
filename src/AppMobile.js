@@ -380,63 +380,7 @@ export class App {
       }
     });
 
-    // ASCII Tunnel toggle button
-    const asciiBtn = document.createElement('button');
-    asciiBtn.className = 'minimal-control-btn';
-    asciiBtn.innerHTML = 'Ω';
-    asciiBtn.title = 'Toggle ASCII Tunnel';
-    asciiBtn.style.cssText = `
-      background: transparent;
-      border: 1px solid #99ccff;
-      color: #99ccff;
-      width: 41px;
-      height: 41px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      transition: all 0.2s;
-      font-family: 'Space Mono', monospace;
-      flex-shrink: 0;
-    `;
-    
-    asciiBtn.addEventListener('mouseenter', () => {
-      if (asciiBtn.classList.contains('active')) {
-        asciiBtn.style.backgroundColor = '#336699';
-        asciiBtn.style.color = '#ffffff';
-      } else {
-        asciiBtn.style.backgroundColor = '#99ccff';
-        asciiBtn.style.color = '#000000';
-      }
-    });
-    
-    asciiBtn.addEventListener('mouseleave', () => {
-      if (asciiBtn.classList.contains('active')) {
-        asciiBtn.style.backgroundColor = '#99ccff';
-        asciiBtn.style.color = '#000000';
-      } else {
-        asciiBtn.style.backgroundColor = 'transparent';
-        asciiBtn.style.color = '#99ccff';
-      }
-    });
-    
-    asciiBtn.addEventListener('click', () => {
-      const isVisible = this.asciiTunnel.isVisible;
-      this.asciiTunnel.setVisibility(!isVisible);
-      if (isVisible) {
-        asciiBtn.classList.remove('active');
-        asciiBtn.innerHTML = 'Ω';
-        asciiBtn.style.backgroundColor = 'transparent';
-        asciiBtn.style.color = '#99ccff';
-      } else {
-        asciiBtn.classList.add('active');
-        asciiBtn.innerHTML = 'Ω';
-        asciiBtn.style.backgroundColor = '#99ccff';
-        asciiBtn.style.color = '#000000';
-      }
-    });
+
 
     // Solar System toggle button
     const solarBtn = document.createElement('button');
@@ -718,7 +662,6 @@ export class App {
     });
     
     controlsContainer.appendChild(agentToggleBtn);
-    controlsContainer.appendChild(asciiBtn);
     controlsContainer.appendChild(solarBtn);
     controlsContainer.appendChild(polygonBtn);
     controlsContainer.appendChild(themeBtn);
