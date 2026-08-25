@@ -1455,7 +1455,7 @@ export class App {
     // Create the button element
     this.asciiVoidButton = document.createElement('button');
     this.asciiVoidButton.className = 'asciivoid-button';
-    this.asciiVoidButton.textContent = 'SHOP';
+    this.asciiVoidButton.textContent = 'PROJECT 2050';
     
     // Top-left positioning - safe from all other elements (mobile-optimized)
     this.asciiVoidButton.style.cssText = `
