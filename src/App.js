@@ -5,6 +5,7 @@ import { ThemeManager } from './controllers/ThemeManager.js';
 import { SplashScreen } from './components/SplashScreen.js';
 import { RetroWindow } from './components/RetroWindow.js';
 import { AsciiWindow } from './components/AsciiWindow.js';
+import { AudioPlayer } from './components/AudioPlayer.js';
 import { GOOGLE_DRIVE_CONFIG, readPublicFile } from './config/googleDrive.js';
 
 // Import all other components but keep them hidden initially
@@ -33,6 +34,9 @@ export class App {
     
     // Initialize audio manager (singleton)
     this.audioManager = AudioManager.getInstance();
+    
+    // Initialize custom Audio Player
+    this.audioPlayer = new AudioPlayer();
     
     // Google Drive integration
     this.googleDriveConfig = GOOGLE_DRIVE_CONFIG;

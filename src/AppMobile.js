@@ -5,6 +5,7 @@ import { ThemeManager } from './controllers/ThemeManager.js';
 import { SplashScreen } from './components/SplashScreen.js';
 import { RetroWindow } from './components/RetroWindow.js';
 import { AsciiWindow } from './components/AsciiWindow.js';
+import { AudioPlayer } from './components/AudioPlayer.js';
 import { GOOGLE_DRIVE_CONFIG, readPublicFile } from './config/googleDrive.js';
 
 // Import all other components but keep them hidden initially
@@ -43,6 +44,9 @@ export class App {
     
     // Initialize audio manager (singleton)
     this.audioManager = AudioManager.getInstance();
+    
+    // Initialize custom Audio Player
+    this.audioPlayer = new AudioPlayer();
     
     // Google Drive integration
     this.googleDriveConfig = GOOGLE_DRIVE_CONFIG;
@@ -123,7 +127,7 @@ export class App {
       
       // Initialize all other components but keep them hidden (for future use)
       this.splashScreen.log('<img src="public/ascii/WORM.svg" style="width: 16px; height: 16px; filter: brightness(0) invert(1); vertical-align: middle; margin-right: 8px;"> Loading components...', 65);
-      this.controlPanel = new ControlPanel('control-panels');
+      // this.controlPanel = new ControlPanel('control-panels'); // Removed agent menu on mobile
       this.starfield = new Starfield();
       this.asciiTunnel = new ASCIITunnel();
       this.solarSystem = new SolarSystem();

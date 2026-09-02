@@ -1,198 +1,146 @@
-import { Component } from './Base.js';
-
-/**
- * AudioPlayer component with minimal WMP-like interface
- */
-export class AudioPlayer extends Component {
-  /**
-   * Create a new AudioPlayer instance
-   * @param {AudioManager} audioManager Audio manager instance
-   */
-  constructor(audioManager) {
-    super();
-    this.audioManager = audioManager;
-    this.isAudioLoaded = false;
-    this.createPlayerUI();
-    this.setupEventListeners();
+export class AudioPlayer {
+  constructor() {
+    this.tracks = [
+      'Cinematic Nightscape.mp3',
+      'Dive into this Dreamscape.mp3',
+      'Echo Trails.mp3',
+      'Echoes in the Groove.mp3',
+      'Echoes of Tomorrow.mp3',
+      'Electric Shadows.mp3',
+      'Glitch in the Groove.mp3',
+      'Hypnotic Groove.mp3',
+      'Late Night Echoes.mp3',
+      'Melodic Echoes.mp3',
+      'Neon Echoes.mp3',
+      'Saturated Reverie.mp3',
+      'Shimmering Trails.mp3',
+      'Tension in the Air.mp3'
+    ];
+    
+    this.currentTrackIndex = 0;
+    this.isPlaying = false;
+    this.isMuted = false;
+    this.audio = new Audio();
+    this.audio.loop = false;
+    
+    this.audio.addEventListener('ended', () => this.nextTrack());
+    
+    this.initUI();
+    this.loadTrack(0);
   }
 
-  /**
-   * Create the player UI
-   */
-  createPlayerUI() {
-    this.element = document.createElement('div');
-    this.element.className = 'audio-player';
-    
-    // Mobile-specific styling
-    if (this.isMobile) {
-      this.element.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90vw;
-        max-width: 400px;
-        background: rgba(0, 0, 0, 0.8);
-        border: 1px solid #333;
-        border-radius: 8px;
-        padding: 15px;
-        z-index: 1000;
-      `;
+  loadTrack(index) {
+    this.currentTrackIndex = index;
+    this.audio.src = `./public/audio/${this.tracks[this.currentTrackIndex]}`;
+    const trackName = this.tracks[this.currentTrackIndex].replace('.mp3', '');
+    if (this.isPlaying) {
+      this.audio.play().catch(e => console.error("Audio playback failed:", e));
     }
-    
-    // Progress bar
-    this.progressContainer = document.createElement('div');
-    this.progressContainer.className = 'progress-container';
-    
-    this.progressBar = document.createElement('div');
-    this.progressBar.className = 'progress-bar';
-    
-    this.progressFill = document.createElement('div');
-    this.progressFill.className = 'progress-fill';
-    
-    this.progressBar.appendChild(this.progressFill);
-    this.progressContainer.appendChild(this.progressBar);
-    
-    // Controls
-    this.controls = document.createElement('div');
-    this.controls.className = 'player-controls';
-    
-    this.playButton = document.createElement('button');
-    this.playButton.className = 'player-button play';
-    this.playButton.innerHTML = '▶';
-    this.playButton.disabled = true;
-    
-    // Mobile-specific button styling
-    if (this.isMobile) {
-      this.playButton.style.cssText = `
-        width: 48px;
-        height: 48px;
-        font-size: 20px;
-        border-radius: 50%;
-        background: #99ccff;
-        color: #000;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 10px;
-      `;
-    }
-    
-    this.timeDisplay = document.createElement('div');
-    this.timeDisplay.className = 'time-display';
-    this.timeDisplay.textContent = '0:00 / 0:00';
-    
-    this.volumeControl = document.createElement('input');
-    this.volumeControl.type = 'range';
-    this.volumeControl.className = 'volume-control';
-    this.volumeControl.min = 0;
-    this.volumeControl.max = 1;
-    this.volumeControl.step = 0.1;
-    this.volumeControl.value = 1;
-    
-    // Mobile-specific volume control styling
-    if (this.isMobile) {
-      this.volumeControl.style.cssText = `
-        width: 100px;
-        height: 6px;
-        background: #333;
-        outline: none;
-        border-radius: 3px;
-        -webkit-appearance: none;
-      `;
-    }
-    
-    this.controls.appendChild(this.playButton);
-    this.controls.appendChild(this.timeDisplay);
-    this.controls.appendChild(this.volumeControl);
-    
-    this.element.appendChild(this.progressContainer);
-    this.element.appendChild(this.controls);
-    
-    document.body.appendChild(this.element);
   }
 
-  /**
-   * Called when audio is loaded and ready to play
-   */
-  onAudioLoaded() {
-    console.log('🎵 Audio player ready for playback');
-    this.isAudioLoaded = true;
-    this.playButton.disabled = false;
-    this.playAudio();
+  togglePlay() {
+    if (this.isPlaying) {
+      this.audio.pause();
+      this.playBtn.innerHTML = '&#9654;'; // ▶
+    } else {
+      this.audio.play().catch(e => console.error("Audio playback failed:", e));
+      this.playBtn.innerHTML = '&#10074;&#10074;'; // ❚❚
+    }
+    this.isPlaying = !this.isPlaying;
   }
 
-  /**
-   * Handle play button click
-   */
-  playAudio() {
-    if (!this.isAudioLoaded) {
-      console.log('⚠️ Cannot play: Audio not loaded yet');
+  toggleMute() {
+    this.isMuted = !this.isMuted;
+    this.audio.muted = this.isMuted;
+    this.muteBtn.innerHTML = this.isMuted ? '&#9840;' : '&#9835;'; // 🕨 / ♫
+  }
+
+  nextTrack() {
+    let next = this.currentTrackIndex + 1;
+    if (next >= this.tracks.length) next = 0;
+    this.loadTrack(next);
+  }
+
+  prevTrack() {
+    let prev = this.currentTrackIndex - 1;
+    if (prev < 0) prev = this.tracks.length - 1;
+    this.loadTrack(prev);
+  }
+
+  initUI() {
+    this.mount();
+  }
+
+  mount() {
+    const container = document.querySelector('.minimal-controls');
+    if (!container) {
+      setTimeout(() => this.mount(), 500);
       return;
     }
-    
-    if (this.audioManager.isPlaying) {
-      this.audioManager.pause();
-      this.playButton.innerHTML = '▶';
-    } else {
-      this.audioManager.play();
-      this.playButton.innerHTML = '⏸';
-    }
+
+    // Prev Button
+    this.prevBtn = document.createElement('button');
+    this.prevBtn.className = 'minimal-control-btn audio-player-btn';
+    this.prevBtn.innerHTML = '&#9664;'; // ◀
+    this.prevBtn.title = 'Previous Track';
+    this.styleButton(this.prevBtn);
+    this.prevBtn.addEventListener('click', () => this.prevTrack());
+    container.appendChild(this.prevBtn);
+
+    // Play/Pause Button
+    this.playBtn = document.createElement('button');
+    this.playBtn.className = 'minimal-control-btn audio-player-btn';
+    this.playBtn.innerHTML = '&#9654;'; // ▶
+    this.playBtn.title = 'Play / Pause';
+    this.styleButton(this.playBtn);
+    this.playBtn.addEventListener('click', () => this.togglePlay());
+    container.appendChild(this.playBtn);
+
+    // Next Button
+    this.nextBtn = document.createElement('button');
+    this.nextBtn.className = 'minimal-control-btn audio-player-btn';
+    this.nextBtn.innerHTML = '&#9654;&#9654;'; // ▶▶
+    this.nextBtn.title = 'Next Track';
+    this.styleButton(this.nextBtn);
+    this.nextBtn.addEventListener('click', () => this.nextTrack());
+    container.appendChild(this.nextBtn);
+
+    // Mute Button
+    this.muteBtn = document.createElement('button');
+    this.muteBtn.className = 'minimal-control-btn audio-player-btn';
+    this.muteBtn.innerHTML = '&#9835;'; // ♫
+    this.muteBtn.title = 'Mute / Unmute';
+    this.styleButton(this.muteBtn);
+    this.muteBtn.addEventListener('click', () => this.toggleMute());
+    container.appendChild(this.muteBtn);
   }
 
-  /**
-   * Set up event listeners
-   */
-  setupEventListeners() {
-    // Play/Pause button
-    this.playButton.addEventListener('click', () => this.playAudio());
-    
-    // Progress bar
-    this.progressBar.addEventListener('click', (e) => {
-      if (!this.isAudioLoaded) return;
-      const rect = this.progressBar.getBoundingClientRect();
-      const pos = (e.clientX - rect.left) / rect.width;
-      this.audioManager.seek(pos * this.audioManager.duration);
-      this.updateProgress(pos);
+  styleButton(btn) {
+    btn.style.cssText = `
+      background: transparent;
+      border: 1px solid #333333;
+      color: var(--fg-color, #99ccff);
+      width: 41px;
+      height: 41px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: bold;
+      transition: all 0.2s;
+      opacity: 0.8;
+    `;
+    btn.addEventListener('mouseover', () => {
+      btn.style.transform = 'scale(1.1)';
+      btn.style.opacity = '1';
+      btn.style.borderColor = '#99ccff';
     });
-    
-    // Volume control
-    this.volumeControl.addEventListener('input', () => {
-      this.audioManager.setVolume(this.volumeControl.value);
+    btn.addEventListener('mouseout', () => {
+      btn.style.transform = 'scale(1)';
+      btn.style.opacity = '0.8';
+      btn.style.borderColor = '#333333';
     });
-    
-    // Update progress
-    setInterval(() => {
-      if (this.audioManager.isPlaying) {
-        const progress = this.audioManager.currentTime / this.audioManager.duration;
-        this.updateProgress(progress);
-        this.updateTimeDisplay();
-      }
-    }, 100);
   }
-
-  /**
-   * Update progress bar
-   * @param {number} progress Progress value between 0 and 1
-   */
-  updateProgress(progress) {
-    this.progressFill.style.width = `${progress * 100}%`;
-  }
-
-  /**
-   * Update time display
-   */
-  updateTimeDisplay() {
-    const formatTime = (time) => {
-      const minutes = Math.floor(time / 60);
-      const seconds = Math.floor(time % 60);
-      return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-    };
-    
-    const current = formatTime(this.audioManager.currentTime);
-    const total = formatTime(this.audioManager.duration);
-    this.timeDisplay.textContent = `${current} / ${total}`;
-  }
-} 
+}
