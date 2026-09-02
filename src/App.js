@@ -1464,26 +1464,21 @@ export class App {
     // Create the button element
     this.asciiVoidButton = document.createElement('button');
     this.asciiVoidButton.className = 'asciivoid-button';
-    this.asciiVoidButton.textContent = 'PROJECT 2050';
+    this.asciiVoidButton.innerHTML = '<img src="public/logos/2050.png" alt="PROJECT 2050" style="height: 120px; display: block; object-fit: contain;">';
     
     // Top-left positioning - safe from all other elements
     this.asciiVoidButton.style.cssText = `
       position: fixed;
       top: 20px;
       left: 20px;
-      background: var(--bg-color);
-      color: var(--fg-color);
+      background: rgba(0, 0, 0, 0.5);
       border: 1px solid var(--track-color);
-      padding: 10px 18px;
-      font-size: 12px;
-      font-weight: bold;
-      font-family: 'Space Mono', monospace;
+      padding: 8px 12px;
       cursor: pointer;
       z-index: 1002;
       border-radius: 4px;
       transition: all 0.2s ease;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+
       box-shadow: 
         0 0 10px rgba(0, 0, 0, 0.3),
         2px 2px 5px rgba(0, 0, 0, 0.5);
@@ -3552,7 +3547,7 @@ export class App {
           
           <!-- Workshop Poster -->
           <div style="text-align: center; margin: 12px 0;">
-            <img src="public/gigs/workshop.png?v=${Date.now()}" alt="OMNIVOID Workshop" style="
+            <img src="public/gigs/Workshop_Poster.jpg?v=${Date.now()}" alt="OMNIVOID Workshop" style="
               max-width: 100%;
               height: auto;
               border: 1px solid #333;
@@ -3562,7 +3557,7 @@ export class App {
           
           <!-- Registration Button -->
           <div style="text-align: center; margin: 12px 0;">
-            <a href="https://forms.gle/tbbp7vZfwxHT9aPx6" 
+            <a href="https://outworld.fanpit.live/events/QpHjaSHz" 
                target="_blank" 
                style="
                  display: inline-block;
@@ -3641,7 +3636,7 @@ export class App {
           display: block;
         ">
           <div style="text-align: center; margin-bottom: 12px;">
-            <img src="public/gigs/gig.png?v=${Date.now()}" alt="OMNIVOID Live Gig" style="
+            <img src="public/gigs/GIg_poster_Edition_09.jpg?v=${Date.now()}" alt="OMNIVOID Live Gig" style="
               max-width: 100%;
               height: auto;
               border: 1px solid #333;
@@ -3660,22 +3655,24 @@ export class App {
               <div><strong>Visuals:</strong> Real-time audio-reactive art</div>
             </div>
           </div>
-          <a style="
+          <a href="https://outworld.fanpit.live/events/QpHjaSHz" target="_blank" style="
             display: block;
             text-align: center;
             padding: 8px 16px;
-            background: #333333;
-            color: #666666;
+            background: #99ccff;
+            color: #000000;
             text-decoration: none;
             border-radius: 4px;
             font-size: 10px;
             font-weight: bold;
             font-family: 'Space Mono', monospace;
             transition: all 0.2s;
-            cursor: not-allowed;
-            opacity: 0.5;
-          " title="Tickets unavailable">
-            🎫 TICKETS UNAVAILABLE
+            cursor: pointer;
+            border: 1px solid #99ccff;
+          " onmouseover="this.style.background='#66aaff'; this.style.borderColor='#66aaff'"
+             onmouseout="this.style.background='#99ccff'; this.style.borderColor='#99ccff'"
+             title="Get Tickets">
+            🎫 GET TICKETS
           </a>
         </div>
         
@@ -3686,7 +3683,7 @@ export class App {
           display: none;
         ">
           <div style="text-align: center; margin-bottom: 12px;">
-            <img src="public/gigs/workshop.png?v=${Date.now()}" alt="OMNIVOID Workshop" style="
+            <img src="public/gigs/Workshop_Poster.jpg?v=${Date.now()}" alt="OMNIVOID Workshop" style="
               max-width: 100%;
               height: auto;
               border: 1px solid #333;
@@ -3705,7 +3702,7 @@ export class App {
               <div><strong>Level:</strong> Intermediate to Advanced</div>
             </div>
           </div>
-          <a href="https://forms.gle/tbbp7vZfwxHT9aPx6" target="_blank" style="
+          <a href="https://outworld.fanpit.live/events/QpHjaSHz" target="_blank" style="
             display: block;
             text-align: center;
             padding: 8px 16px;
