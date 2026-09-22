@@ -191,6 +191,20 @@ select.animation-select option {
   padding: 3px;
 }
 
-/* Shop button */
+/* Shop button & Project 2050 group */
 .asciivoid-button {
 }
+
+.project-2050-container {
+  position: fixed;
+  z-index: 1002;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.dinisnoise-button {
+  user-select: none;
+}
+

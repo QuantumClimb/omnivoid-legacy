@@ -1454,7 +1454,7 @@ export class App {
   }
 
   /**
-   * Create ASCIIVOID button positioned in top-left corner
+   * Create ASCIIVOID button and DIN IS NOISE button positioned on the left side
    */
   createAsciiVoidButton() {
     // Check if button already exists
@@ -1463,33 +1463,41 @@ export class App {
       return;
     }
 
-    console.log('🎨 Creating ASCIIVOID button...');
+    console.log('🎨 Creating ASCIIVOID & DIN IS NOISE buttons...');
 
-    // Create the button element
+    // Create wrapper container
+    this.project2050Container = document.createElement('div');
+    this.project2050Container.className = 'project-2050-container';
+    this.project2050Container.style.cssText = `
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1002;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    `;
+
+    // Create the PROJECT 2050 button element
     this.asciiVoidButton = document.createElement('button');
     this.asciiVoidButton.className = 'asciivoid-button';
     this.asciiVoidButton.innerHTML = '<img src="public/logos/2050.png" alt="PROJECT 2050" style="height: 120px; display: block; object-fit: contain;">';
     
-    // Top-left positioning - safe from all other elements
     this.asciiVoidButton.style.cssText = `
-      position: fixed;
-      top: 20px;
-      left: 20px;
       background: rgba(0, 0, 0, 0.5);
       border: 1px solid var(--track-color);
       padding: 8px 12px;
       cursor: pointer;
-      z-index: 1002;
       border-radius: 4px;
       transition: all 0.2s ease;
-
       box-shadow: 
         0 0 10px rgba(0, 0, 0, 0.3),
         2px 2px 5px rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(10px);
     `;
 
-    // Add hover effects
+    // Add hover effects for PROJECT 2050
     this.asciiVoidButton.addEventListener('mouseenter', () => {
       this.asciiVoidButton.style.backgroundColor = 'var(--track-color)';
       this.asciiVoidButton.style.borderColor = 'var(--thumb-color)';
@@ -1501,7 +1509,7 @@ export class App {
     });
 
     this.asciiVoidButton.addEventListener('mouseleave', () => {
-      this.asciiVoidButton.style.backgroundColor = 'var(--bg-color)';
+      this.asciiVoidButton.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
       this.asciiVoidButton.style.borderColor = 'var(--track-color)';
       this.asciiVoidButton.style.transform = 'scale(1)';
       this.asciiVoidButton.style.boxShadow = `
@@ -1510,23 +1518,87 @@ export class App {
       `;
     });
 
-    // Add click handler
+    // Add click handler for PROJECT 2050
     this.asciiVoidButton.addEventListener('click', () => {
       console.log('🎨 SHOP button clicked, opening in new tab due to CSP');
       window.open('https://project2050.shop/', '_blank');
     });
 
-    // Add to document
-    document.body.appendChild(this.asciiVoidButton);
+    // Create DIN IS NOISE button right below PROJECT 2050
+    this.dinisNoiseButton = document.createElement('button');
+    this.dinisNoiseButton.className = 'dinisnoise-button';
+    this.dinisNoiseButton.innerHTML = `
+      <span style="color: #99ccff; font-family: 'Space Mono', monospace; font-size: 11px; font-weight: bold; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+        <span>DIN IS NOISE</span>
+        <span style="font-size: 10px;">⧉</span>
+      </span>
+    `;
     
-    console.log('✅ SHOP button created in top-left corner');
+    this.dinisNoiseButton.style.cssText = `
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid var(--track-color, #99ccff);
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      box-shadow: 
+        0 0 10px rgba(0, 0, 0, 0.3),
+        2px 2px 5px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      width: 100%;
+      text-align: center;
+    `;
+
+    // Add hover effects for DIN IS NOISE
+    this.dinisNoiseButton.addEventListener('mouseenter', () => {
+      this.dinisNoiseButton.style.backgroundColor = 'var(--track-color, rgba(153, 204, 255, 0.2))';
+      this.dinisNoiseButton.style.borderColor = 'var(--thumb-color, #ffffff)';
+      this.dinisNoiseButton.style.transform = 'scale(1.05)';
+      this.dinisNoiseButton.style.boxShadow = `
+        0 0 15px rgba(153, 204, 255, 0.4),
+        4px 4px 8px rgba(0, 0, 0, 0.6)
+      `;
+    });
+
+    this.dinisNoiseButton.addEventListener('mouseleave', () => {
+      this.dinisNoiseButton.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+      this.dinisNoiseButton.style.borderColor = 'var(--track-color, #99ccff)';
+      this.dinisNoiseButton.style.transform = 'scale(1)';
+      this.dinisNoiseButton.style.boxShadow = `
+        0 0 10px rgba(0, 0, 0, 0.3),
+        2px 2px 5px rgba(0, 0, 0, 0.5)
+      `;
+    });
+
+    // Add click handler for DIN IS NOISE button
+    this.dinisNoiseButton.addEventListener('click', () => {
+      console.log('🎨 DIN IS NOISE button clicked, opening retro window...');
+      if (!this.dinisNoiseWindow) {
+        this.dinisNoiseWindow = new AsciiWindow(
+          'dinisnoise-window',
+          'DIN IS NOISE',
+          'https://dinisnoise.org/'
+        );
+      }
+      this.dinisNoiseWindow.toggle();
+    });
+
+    // Assemble container
+    this.project2050Container.appendChild(this.asciiVoidButton);
+    this.project2050Container.appendChild(this.dinisNoiseButton);
+
+    // Add to document
+    document.body.appendChild(this.project2050Container);
+    
+    console.log('✅ PROJECT 2050 & DIN IS NOISE buttons created');
   }
 
   /**
-   * Position ASCIIVOID button between logo bottom and minimal controls top
+   * Position ASCIIVOID & DIN IS NOISE container between logo bottom and minimal controls top
    */
   positionAsciiVoidButton() {
-    if (!this.asciiVoidButton) return;
+    const target = this.project2050Container || this.asciiVoidButton;
+    if (!target) return;
 
     // Wait for elements to be rendered
     requestAnimationFrame(() => {
@@ -1540,15 +1612,15 @@ export class App {
         // Calculate position halfway between logo bottom and controls top
         const logoBottom = logoRect.bottom;
         const controlsTop = controlsRect.top;
-        const buttonTop = logoBottom + ((controlsTop - logoBottom) / 2) - 20; // -20 for button height/2
+        const buttonTop = logoBottom + ((controlsTop - logoBottom) / 2) - 35;
         
-        this.asciiVoidButton.style.top = `${buttonTop}px`;
+        target.style.top = `${buttonTop}px`;
         
-        console.log(`🎨 ASCIIVOID button positioned at ${buttonTop}px (logo bottom: ${logoBottom}, controls top: ${controlsTop})`);
+        console.log(`🎨 PROJECT 2050 container positioned at ${buttonTop}px (logo bottom: ${logoBottom}, controls top: ${controlsTop})`);
       } else {
         // Fallback positioning if elements not ready
-        this.asciiVoidButton.style.top = '60%';
-        console.log('🎨 ASCIIVOID button positioned at fallback 60%');
+        target.style.top = '58%';
+        console.log('🎨 PROJECT 2050 container positioned at fallback 58%');
       }
     });
   }

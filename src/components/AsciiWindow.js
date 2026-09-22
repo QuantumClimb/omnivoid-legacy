@@ -86,6 +86,42 @@ export class AsciiWindow extends Component {
       font-family: 'Space Mono', monospace;
     `;
 
+    // Titlebar actions container
+    const actionsContainer = document.createElement('div');
+    actionsContainer.style.cssText = `
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    `;
+
+    // Create external link button
+    this.extButton = document.createElement('a');
+    this.extButton.href = this.url;
+    this.extButton.target = '_blank';
+    this.extButton.rel = 'noopener noreferrer';
+    this.extButton.title = 'Open in external tab';
+    this.extButton.innerHTML = '↗';
+    this.extButton.className = 'ascii-window-extlink';
+    this.extButton.style.cssText = `
+      width: 24px;
+      height: 24px;
+      background-color: transparent;
+      color: var(--fg-color);
+      border: 1px solid var(--track-color);
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      line-height: 1;
+      font-family: 'Space Mono', monospace;
+      border-radius: 0;
+      text-decoration: none;
+      transition: background-color 0.2s, color 0.2s;
+    `;
+
     // Create close button
     this.closeButton = document.createElement('button');
     this.closeButton.innerHTML = '×';
@@ -109,6 +145,9 @@ export class AsciiWindow extends Component {
       transition: background-color 0.2s, color 0.2s;
     `;
 
+    actionsContainer.appendChild(this.extButton);
+    actionsContainer.appendChild(this.closeButton);
+
     // Create window body
     this.body = document.createElement('div');
     this.body.className = 'ascii-window-body';
@@ -121,6 +160,11 @@ export class AsciiWindow extends Component {
       padding: 0;
       position: relative;
     `;
+
+    let hostname = this.url;
+    try {
+      hostname = new URL(this.url).hostname;
+    } catch (e) {}
 
     // Create loading indicator
     this.loadingIndicator = document.createElement('div');
@@ -136,8 +180,8 @@ export class AsciiWindow extends Component {
       z-index: 1;
     `;
     this.loadingIndicator.innerHTML = `
-      <div style="margin-bottom: 10px;">Loading SHOP...</div>
-      <div style="font-size: 12px; opacity: 0.7;">Connecting to project2050.shop</div>
+      <div style="margin-bottom: 10px; font-weight: bold;">Loading ${this.title}...</div>
+      <div style="font-size: 12px; opacity: 0.7;">Connecting to ${hostname}</div>
     `;
 
     // Create iframe
@@ -157,24 +201,24 @@ export class AsciiWindow extends Component {
       this.isLoading = false;
       this.loadingIndicator.style.display = 'none';
       this.iframe.style.opacity = '1';
-      console.log('✅ SHOP iframe loaded successfully');
+      console.log(`✅ ${this.title} iframe loaded successfully`);
     };
 
     this.iframe.onerror = () => {
       this.isLoading = false;
       this.loadingIndicator.innerHTML = `
-        <div style="color: #ff4444; margin-bottom: 10px;">Failed to load SHOP</div>
-        <div style="font-size: 12px; opacity: 0.7;">Check your internet connection</div>
-        <div style="font-size: 10px; margin-top: 10px; opacity: 0.5;">${this.url}</div>
+        <div style="color: #ff4444; margin-bottom: 10px;">Failed to load ${this.title}</div>
+        <div style="font-size: 12px; opacity: 0.7; margin-bottom: 12px;">Opening link directly:</div>
+        <a href="${this.url}" target="_blank" rel="noopener noreferrer" style="color: #99ccff; text-decoration: underline; font-size: 12px;">${this.url} ↗</a>
       `;
-      console.error('❌ Failed to load SHOP iframe');
+      console.error(`❌ Failed to load ${this.title} iframe`);
     };
 
     // Assemble window
     this.body.appendChild(this.loadingIndicator);
     this.body.appendChild(this.iframe);
     this.titleBar.appendChild(this.titleText);
-    this.titleBar.appendChild(this.closeButton);
+    this.titleBar.appendChild(actionsContainer);
     this.element.appendChild(this.titleBar);
     this.element.appendChild(this.body);
 
@@ -192,7 +236,7 @@ export class AsciiWindow extends Component {
       this.hide();
     });
 
-    // Close button hover effects - Green theme
+    // Close button hover effects
     this.closeButton.addEventListener('mouseenter', () => {
       this.closeButton.style.backgroundColor = 'var(--track-color)';
       this.closeButton.style.color = 'var(--fg-color)';
@@ -203,18 +247,20 @@ export class AsciiWindow extends Component {
       this.closeButton.style.color = 'var(--fg-color)';
     });
 
-    this.closeButton.addEventListener('mousedown', () => {
-      this.closeButton.style.backgroundColor = 'var(--thumb-color)';
-      this.closeButton.style.color = 'var(--bg-color)';
+    // External link button hover effects
+    this.extButton.addEventListener('mouseenter', () => {
+      this.extButton.style.backgroundColor = 'var(--track-color)';
+      this.extButton.style.color = 'var(--fg-color)';
     });
 
-    this.closeButton.addEventListener('mouseup', () => {
-      this.closeButton.style.backgroundColor = 'var(--track-color)';
-      this.closeButton.style.color = 'var(--fg-color)';
+    this.extButton.addEventListener('mouseleave', () => {
+      this.extButton.style.backgroundColor = 'transparent';
+      this.extButton.style.color = 'var(--fg-color)';
     });
 
-    // Dragging functionality
+    // Dragging functionality (Mouse)
     this.titleBar.addEventListener('mousedown', (e) => {
+      if (e.target === this.closeButton || e.target === this.extButton) return;
       this.isDragging = true;
       const rect = this.element.getBoundingClientRect();
       this.dragOffset.x = e.clientX - rect.left;
@@ -224,9 +270,23 @@ export class AsciiWindow extends Component {
       e.preventDefault();
     });
 
-    // Bind drag handlers
+    // Dragging functionality (Touch)
+    this.titleBar.addEventListener('touchstart', (e) => {
+      if (e.target === this.closeButton || e.target === this.extButton) return;
+      this.isDragging = true;
+      const touch = e.touches[0];
+      const rect = this.element.getBoundingClientRect();
+      this.dragOffset.x = touch.clientX - rect.left;
+      this.dragOffset.y = touch.clientY - rect.top;
+      document.addEventListener('touchmove', this.handleTouchDrag, { passive: false });
+      document.addEventListener('touchend', this.handleTouchDragEnd);
+    });
+
+    // Bind handlers
     this.handleDrag = this.handleDrag.bind(this);
     this.handleDragEnd = this.handleDragEnd.bind(this);
+    this.handleTouchDrag = this.handleTouchDrag.bind(this);
+    this.handleTouchDragEnd = this.handleTouchDragEnd.bind(this);
 
     // ESC key to close
     document.addEventListener('keydown', (e) => {
@@ -264,6 +324,41 @@ export class AsciiWindow extends Component {
     this.isDragging = false;
     document.removeEventListener('mousemove', this.handleDrag);
     document.removeEventListener('mouseup', this.handleDragEnd);
+  }
+
+  /**
+   * Handle touch dragging
+   */
+  handleTouchDrag(e) {
+    if (!this.isDragging || !e.touches || e.touches.length === 0) return;
+
+    const touch = e.touches[0];
+    const x = touch.clientX - this.dragOffset.x;
+    const y = touch.clientY - this.dragOffset.y;
+
+    // Constrain to viewport
+    const maxX = window.innerWidth - this.element.offsetWidth;
+    const maxY = window.innerHeight - this.element.offsetHeight;
+    
+    const constrainedX = Math.max(0, Math.min(x, maxX));
+    const constrainedY = Math.max(0, Math.min(y, maxY));
+
+    this.element.style.left = constrainedX + 'px';
+    this.element.style.top = constrainedY + 'px';
+    this.element.style.transform = 'none';
+
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+  }
+
+  /**
+   * Handle touch drag end
+   */
+  handleTouchDragEnd() {
+    this.isDragging = false;
+    document.removeEventListener('touchmove', this.handleTouchDrag);
+    document.removeEventListener('touchend', this.handleTouchDragEnd);
   }
 
   /**
