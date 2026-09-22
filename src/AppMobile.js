@@ -1511,17 +1511,12 @@ export class App {
     // Create DIN IS NOISE button right below PROJECT 2050
     this.dinisNoiseButton = document.createElement('button');
     this.dinisNoiseButton.className = 'dinisnoise-button';
-    this.dinisNoiseButton.innerHTML = `
-      <span style="color: #99ccff; font-family: 'Space Mono', monospace; font-size: 11px; font-weight: bold; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; gap: 6px;">
-        <span>DIN IS NOISE</span>
-        <span style="font-size: 10px;">⧉</span>
-      </span>
-    `;
+    this.dinisNoiseButton.innerHTML = '<img src="public/logos/din.png" alt="DIN IS NOISE" style="height: 100px; display: block; object-fit: contain;">';
     
     this.dinisNoiseButton.style.cssText = `
-      background: rgba(0, 0, 0, 0.6);
-      border: 1px solid var(--track-color, #99ccff);
-      padding: 5px 10px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--track-color);
+      padding: 6px 10px;
       cursor: pointer;
       border-radius: 4px;
       transition: all 0.2s ease;
@@ -1529,21 +1524,19 @@ export class App {
         0 0 10px rgba(0, 0, 0, 0.3),
         2px 2px 5px rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(10px);
-      width: 100%;
-      text-align: center;
       touch-action: manipulation;
     `;
 
     // Add touch handlers for DIN IS NOISE button
     this.dinisNoiseButton.addEventListener('touchstart', () => {
-      this.dinisNoiseButton.style.backgroundColor = 'var(--track-color, rgba(153, 204, 255, 0.3))';
-      this.dinisNoiseButton.style.borderColor = 'var(--thumb-color, #ffffff)';
+      this.dinisNoiseButton.style.backgroundColor = 'var(--track-color)';
+      this.dinisNoiseButton.style.borderColor = 'var(--thumb-color)';
       this.dinisNoiseButton.style.transform = 'scale(0.95)';
     });
 
     this.dinisNoiseButton.addEventListener('touchend', () => {
-      this.dinisNoiseButton.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
-      this.dinisNoiseButton.style.borderColor = 'var(--track-color, #99ccff)';
+      this.dinisNoiseButton.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+      this.dinisNoiseButton.style.borderColor = 'var(--track-color)';
       this.dinisNoiseButton.style.transform = 'scale(1)';
     });
 
