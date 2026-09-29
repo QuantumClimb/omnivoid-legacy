@@ -69,6 +69,8 @@ export class AudioPlayer {
       return;
     }
 
+    const targetContainer = container.querySelector('.audio-player-controls-row') || container;
+
     // Prev Button
     this.prevBtn = document.createElement('button');
     this.prevBtn.className = 'minimal-control-btn audio-player-btn';
@@ -76,7 +78,7 @@ export class AudioPlayer {
     this.prevBtn.title = 'Previous Track';
     this.styleButton(this.prevBtn);
     this.prevBtn.addEventListener('click', () => this.prevTrack());
-    container.appendChild(this.prevBtn);
+    targetContainer.appendChild(this.prevBtn);
 
     // Play/Pause Button
     this.playBtn = document.createElement('button');
@@ -85,7 +87,7 @@ export class AudioPlayer {
     this.playBtn.title = 'Play / Pause';
     this.styleButton(this.playBtn);
     this.playBtn.addEventListener('click', () => this.togglePlay());
-    container.appendChild(this.playBtn);
+    targetContainer.appendChild(this.playBtn);
 
     // Next Button
     this.nextBtn = document.createElement('button');
@@ -94,7 +96,7 @@ export class AudioPlayer {
     this.nextBtn.title = 'Next Track';
     this.styleButton(this.nextBtn);
     this.nextBtn.addEventListener('click', () => this.nextTrack());
-    container.appendChild(this.nextBtn);
+    targetContainer.appendChild(this.nextBtn);
 
     // Mute Button
     this.muteBtn = document.createElement('button');
@@ -103,7 +105,7 @@ export class AudioPlayer {
     this.muteBtn.title = 'Mute / Unmute';
     this.styleButton(this.muteBtn);
     this.muteBtn.addEventListener('click', () => this.toggleMute());
-    container.appendChild(this.muteBtn);
+    targetContainer.appendChild(this.muteBtn);
   }
 
   styleButton(btn) {

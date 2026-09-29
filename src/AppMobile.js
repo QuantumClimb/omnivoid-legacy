@@ -241,22 +241,25 @@ export class App {
     poweredBy.appendChild(poweredByText);
     poweredBy.appendChild(qcLogo);
     
-    // Mobile: same layout as desktop (copyright left, powered by right)
+    // Mobile: stacked copyright and powered by Quantum Climb
     if (this.detectMobile()) {
       footer.style.cssText = `
         position: fixed;
-        bottom: 0px;
+        bottom: 5px;
         left: 0;
         right: 0;
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
         align-items: center;
-        padding: 0 10px;
-        font-size: 6px;
+        justify-content: center;
+        gap: 2px;
+        font-size: 7px;
         color: #99ccff;
         font-family: 'Space Mono', monospace;
-        opacity: 0.8;
+        opacity: 0.85;
         z-index: 10005;
+        pointer-events: none;
+        text-align: center;
       `;
     }
     
@@ -304,25 +307,48 @@ export class App {
     controlsContainer.className = 'minimal-controls';
     controlsContainer.style.cssText = `
       position: fixed;
-      bottom: 25px;
+      bottom: 65px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      flex-wrap: nowrap;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 9px;
+      gap: 6px;
       z-index: 10005;
       background: #111111;
       backdrop-filter: blur(10px);
-      padding: 9px 14px;
-      border-radius: 23px;
+      padding: 8px 12px;
+      border-radius: 20px;
       border: 1px solid #333333;
       box-shadow: 
         0 0 23px rgba(153, 204, 255, 0.2),
         5px 5px 9px rgba(0, 0, 0, 0.5);
       max-width: 95vw;
     `;
+
+    const visualRow = document.createElement('div');
+    visualRow.className = 'visual-controls-row';
+    visualRow.style.cssText = `
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    `;
+
+    const audioRow = document.createElement('div');
+    audioRow.className = 'audio-player-controls-row';
+    audioRow.style.cssText = `
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    `;
+
+    controlsContainer.appendChild(visualRow);
+    controlsContainer.appendChild(audioRow);
     
 
     
@@ -610,8 +636,6 @@ export class App {
 
     
 
-    controlsContainer.appendChild(starfieldBtn);
-    
     // Agent System toggle button
     const agentToggleBtn = document.createElement('button');
     agentToggleBtn.className = 'minimal-control-btn';
@@ -664,11 +688,12 @@ export class App {
         svg.style.stroke = isVisible ? '#000000' : '#99ccff';
       }
     });
-    
-    controlsContainer.appendChild(agentToggleBtn);
-    controlsContainer.appendChild(solarBtn);
-    controlsContainer.appendChild(polygonBtn);
-    controlsContainer.appendChild(themeBtn);
+
+    visualRow.appendChild(starfieldBtn);
+    visualRow.appendChild(agentToggleBtn);
+    visualRow.appendChild(solarBtn);
+    visualRow.appendChild(polygonBtn);
+    visualRow.appendChild(themeBtn);
     
     document.body.appendChild(controlsContainer);
     this.minimalControls = controlsContainer;
