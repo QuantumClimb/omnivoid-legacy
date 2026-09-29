@@ -256,7 +256,7 @@ export class App {
         color: #99ccff;
         font-family: 'Space Mono', monospace;
         opacity: 0.8;
-        z-index: 1001;
+        z-index: 10005;
       `;
     }
     
@@ -304,7 +304,7 @@ export class App {
     controlsContainer.className = 'minimal-controls';
     controlsContainer.style.cssText = `
       position: fixed;
-      bottom: 195px;
+      bottom: 25px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
@@ -312,7 +312,7 @@ export class App {
       align-items: center;
       justify-content: center;
       gap: 9px;
-      z-index: 1001;
+      z-index: 10005;
       background: #111111;
       backdrop-filter: blur(10px);
       padding: 9px 14px;
@@ -1633,7 +1633,7 @@ export class App {
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 1000;
+      z-index: 10005;
       transition: all 0.3s ease;
       backdrop-filter: blur(10px);
       font-family: 'Space Mono', monospace;
@@ -1667,7 +1667,7 @@ export class App {
       border: none;
       border-radius: 10px;
       backdrop-filter: blur(10px);
-      z-index: 999;
+      z-index: 10004;
       opacity: 0;
       visibility: hidden;
       transform: translateY(-10px);
