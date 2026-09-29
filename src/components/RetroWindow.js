@@ -42,40 +42,23 @@ export class RetroWindow extends Component {
     
     // Check if we're on desktop and set appropriate positioning
     const isDesktop = window.innerWidth >= 768;
-    const position = this.desktopPositions[this.id];
-    
-    let positionStyle = '';
-    if (isDesktop && position) {
-      // Desktop: Use predefined positions but center them properly
-      positionStyle = `
-        position: fixed;
-        top: ${position.top};
-        left: ${position.left};
-        transform: translate(-50%, -50%);
-      `;
-    } else {
-      // Mobile: Center the window
-      positionStyle = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      `;
-    }
     
     this.element.style.cssText = `
-      ${positionStyle}
-      width: ${isDesktop ? '480px' : '95vw'};
-      max-width: 90vw;
-      height: ${isDesktop ? '360px' : '70vh'};
-      max-height: 80vh;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: ${isDesktop ? '85vw' : '95vw'};
+      max-width: ${isDesktop ? '1100px' : '95vw'};
+      height: ${isDesktop ? '75vh' : '82vh'};
+      max-height: 85vh;
       background-color: #111111;
       border: 1px solid #99ccff;
       box-shadow: 
         0 0 20px rgba(153, 204, 255, 0.2),
         4px 4px 8px rgba(0, 0, 0, 0.5);
       font-family: 'Space Mono', monospace;
-      font-size: ${isDesktop ? '12px' : '14px'};
+      font-size: ${isDesktop ? '13px' : '14px'};
       z-index: 9999;
       display: none;
       opacity: 0;
@@ -316,15 +299,9 @@ export class RetroWindow extends Component {
         const isDesktop = window.innerWidth >= 768;
         const position = this.desktopPositions[this.id];
         
-        if (isDesktop && position) {
-          this.element.style.left = position.left;
-          this.element.style.top = position.top;
-          this.element.style.transform = 'translate(-50%, -50%)';
-        } else {
-          this.element.style.left = '50%';
-          this.element.style.top = '50%';
-          this.element.style.transform = 'translate(-50%, -50%)';
-        }
+        this.element.style.left = '50%';
+        this.element.style.top = '50%';
+        this.element.style.transform = 'translate(-50%, -50%)';
       }
     }, 200);
   }

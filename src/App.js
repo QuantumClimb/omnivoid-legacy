@@ -1474,20 +1474,28 @@ export class App {
       left: 20px;
       z-index: 1002;
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+      opacity: 0.6;
+      transition: opacity 0.3s ease;
     `;
+    this.project2050Container.addEventListener('mouseenter', () => {
+      this.project2050Container.style.opacity = '1';
+    });
+    this.project2050Container.addEventListener('mouseleave', () => {
+      this.project2050Container.style.opacity = '0.6';
+    });
 
     // Create the PROJECT 2050 button element
     this.asciiVoidButton = document.createElement('button');
     this.asciiVoidButton.className = 'asciivoid-button';
-    this.asciiVoidButton.innerHTML = '<img src="public/logos/2050.png" alt="PROJECT 2050" style="height: 120px; display: block; object-fit: contain;">';
+    this.asciiVoidButton.innerHTML = '<img src="public/logos/2050.png" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src=\'logos/2050.png\';}" alt="PROJECT 2050" style="height: 50px; display: block; object-fit: contain;">';
     
     this.asciiVoidButton.style.cssText = `
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.4);
       border: 1px solid var(--track-color);
-      padding: 8px 12px;
+      padding: 4px 8px;
       cursor: pointer;
       border-radius: 4px;
       transition: all 0.2s ease;
@@ -1502,20 +1510,12 @@ export class App {
       this.asciiVoidButton.style.backgroundColor = 'var(--track-color)';
       this.asciiVoidButton.style.borderColor = 'var(--thumb-color)';
       this.asciiVoidButton.style.transform = 'scale(1.05)';
-      this.asciiVoidButton.style.boxShadow = `
-        0 0 15px rgba(0, 0, 0, 0.4),
-        4px 4px 8px rgba(0, 0, 0, 0.6)
-      `;
     });
 
     this.asciiVoidButton.addEventListener('mouseleave', () => {
-      this.asciiVoidButton.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+      this.asciiVoidButton.style.backgroundColor = 'rgba(0, 0, 0, 0.4)';
       this.asciiVoidButton.style.borderColor = 'var(--track-color)';
       this.asciiVoidButton.style.transform = 'scale(1)';
-      this.asciiVoidButton.style.boxShadow = `
-        0 0 10px rgba(0, 0, 0, 0.3),
-        2px 2px 5px rgba(0, 0, 0, 0.5)
-      `;
     });
 
     // Add click handler for PROJECT 2050
@@ -1524,15 +1524,15 @@ export class App {
       window.open('https://project2050.shop/', '_blank');
     });
 
-    // Create DIN IS NOISE button right below PROJECT 2050
+    // Create DIN IS NOISE button right next to PROJECT 2050
     this.dinisNoiseButton = document.createElement('button');
     this.dinisNoiseButton.className = 'dinisnoise-button';
-    this.dinisNoiseButton.innerHTML = '<img src="public/logos/din.png" alt="DIN IS NOISE" style="height: 120px; display: block; object-fit: contain;">';
+    this.dinisNoiseButton.innerHTML = '<img src="public/logos/din.png" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src=\'logos/din.png\';}" alt="DIN IS NOISE" style="height: 50px; display: block; object-fit: contain;">';
     
     this.dinisNoiseButton.style.cssText = `
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.4);
       border: 1px solid var(--track-color);
-      padding: 8px 12px;
+      padding: 4px 8px;
       cursor: pointer;
       border-radius: 4px;
       transition: all 0.2s ease;
@@ -1547,20 +1547,12 @@ export class App {
       this.dinisNoiseButton.style.backgroundColor = 'var(--track-color)';
       this.dinisNoiseButton.style.borderColor = 'var(--thumb-color)';
       this.dinisNoiseButton.style.transform = 'scale(1.05)';
-      this.dinisNoiseButton.style.boxShadow = `
-        0 0 15px rgba(0, 0, 0, 0.4),
-        4px 4px 8px rgba(0, 0, 0, 0.6)
-      `;
     });
 
     this.dinisNoiseButton.addEventListener('mouseleave', () => {
-      this.dinisNoiseButton.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+      this.dinisNoiseButton.style.backgroundColor = 'rgba(0, 0, 0, 0.4)';
       this.dinisNoiseButton.style.borderColor = 'var(--track-color)';
       this.dinisNoiseButton.style.transform = 'scale(1)';
-      this.dinisNoiseButton.style.boxShadow = `
-        0 0 10px rgba(0, 0, 0, 0.3),
-        2px 2px 5px rgba(0, 0, 0, 0.5)
-      `;
     });
 
     // Add click handler for DIN IS NOISE button
@@ -1693,7 +1685,6 @@ export class App {
       { text: 'Labs', icon: './public/ascii/WORM.svg', window: 'labs', isImage: true },
       { text: 'Radio', icon: './public/menuicons/radio.png', window: 'radio', isImage: true },
       { text: 'Research Papers', icon: './public/menuicons/research.png', window: 'releases', isImage: true },
-      { text: 'Archives', icon: './public/menuicons/gallery.png', window: 'gallery', isImage: true },
       { text: 'Contact', icon: './public/menuicons/contact.png', window: 'contact', isImage: true },
     ];
 
@@ -1729,6 +1720,12 @@ export class App {
       if (item.isImage) {
         const iconImg = document.createElement('img');
         iconImg.src = item.icon;
+        iconImg.onerror = () => {
+          if (!iconImg.dataset.retry) {
+            iconImg.dataset.retry = '1';
+            iconImg.src = item.icon.replace('./public/', './').replace('public/', '');
+          }
+        };
         iconImg.alt = item.text;
         iconImg.style.cssText = `
           width: 24px;
@@ -2769,7 +2766,7 @@ export class App {
       <div style="border: 1px inset #333333; padding: 12px; margin-bottom: 12px; background: #0a0a0a; color: #99ccff;">
         <h3 style="margin: 0 0 8px 0; font-size: 12px; font-weight: bold; color: #99ccff;">LIVE TRANSMISSIONS</h3>
         <p style="margin: 0 0 8px 0; font-size: 11px; color: #99ccff;">
-          Experience real-time audio-visual transmissions from the OMNIVOID network. These live streams connect you directly to the digital consciousness.
+          Recorded live repository &gt;&gt;&gt;&gt;
         </p>
         <div id="live-transmissions-container" style="margin-top: 12px;">
           <div style="text-align: center; color: #66aaff; font-size: 10px;">
@@ -3828,6 +3825,26 @@ export class App {
               <div style="font-size: 11px; font-weight: bold; color: #99ccff;">@omnivoid.labs</div>              
             </div>
           </div>
+
+          <!-- Email Contacts Section -->
+          <div style="
+            margin-top: 12px;
+            padding: 10px;
+            background: #1a1a1a;
+            border: 1px solid #333333;
+            border-radius: 4px;
+            font-family: 'Space Mono', monospace;
+          ">
+            <div style="font-size: 10px; font-weight: bold; color: #66aaff; margin-bottom: 8px; letter-spacing: 1px;">EMAIL CONTACTS</div>
+            <div style="font-size: 11px; margin-bottom: 6px; color: #99ccff;">
+              <span style="color: #66aaff; font-weight: bold;">Main:</span> 
+              <a href="mailto:omnivoid.labs@gmail.com" style="color: #99ccff; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">omnivoid.labs@gmail.com</a>
+            </div>
+            <div style="font-size: 11px; color: #99ccff;">
+              <span style="color: #66aaff; font-weight: bold;">Demos:</span> 
+              <a href="mailto:demos.omnivoid@gmail.com" style="color: #99ccff; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">demos.omnivoid@gmail.com</a>
+            </div>
+          </div>
         </div>
         
       </div>
@@ -4099,129 +4116,6 @@ export class App {
    * Create releases content
    */
   createReleasesContent() {
-    // Documentation articles list
-    const docArticles = [
-      {
-        filename: '01_Resonant_Architecture.txt',
-        title: 'Resonant Architecture',
-        description: 'Exploring sonic signatures in abandoned structures'
-      },
-      {
-        filename: '02_Low-Frequency_Ritual.txt',
-        title: 'Low-Frequency Ritual',
-        description: 'Physiological impact of continuous low-frequency tones'
-      },
-      {
-        filename: '03_Noise_as_Memory.txt',
-        title: 'Noise as Memory',
-        description: 'Preserving audio artifacts as carriers of sonic identity'
-      },
-      {
-        filename: '04_Algorithmic_Folklore.txt',
-        title: 'Algorithmic Folklore',
-        description: 'Emergent patterns in modular synthesizer systems'
-      },
-      {
-        filename: '05_Field_Recording_in_Transitional_Zones.txt',
-        title: 'Field Recording in Transitional Zones',
-        description: 'Sonic ecology of ports, checkpoints, and borders'
-      },
-      {
-        filename: '06_Glitch_as_Narrative.txt',
-        title: 'Glitch as Narrative',
-        description: 'Digital glitches as compositional elements'
-      },
-      {
-        filename: '07_Ethereal_Dub.txt',
-        title: 'Ethereal Dub',
-        description: 'Reimagining classic dub techniques for immersive soundfields'
-      },
-      {
-        filename: '08_Sonic_Camouflage.txt',
-        title: 'Sonic Camouflage',
-        description: 'Creating compositions that blend into ambient environments'
-      },
-      {
-        filename: '09_The_Ritual_Drone.txt',
-        title: 'The Ritual Drone',
-        description: 'How sustained drones alter perceptions of time'
-      },
-      {
-        filename: '10_Beyond_Fidelity.txt',
-        title: 'Beyond Fidelity',
-        description: 'The emotive power of lo-fi recording techniques'
-      }
-    ];
-
-    // Create notepad-style thumbnails HTML
-    const thumbnailsHTML = docArticles.map((article, index) => {
-      return `
-        <div class="doc-thumbnail" 
-             style="
-               width: 80px;
-               height: 100px;
-               border: 2px outset #555555;
-               background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-               cursor: pointer;
-               transition: all 0.2s;
-               position: relative;
-               display: flex;
-               flex-direction: column;
-               justify-content: space-between;
-               padding: 4px;
-               margin: 4px;
-               box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-             "
-             onmouseover="this.style.borderStyle='inset'; this.style.transform='scale(1.05)'; this.style.borderColor='#99ccff';"
-             onmouseout="this.style.borderStyle='outset'; this.style.transform='scale(1)'; this.style.borderColor='#555555';"
-             onclick="globalThis.omnivoidApp.openDocument('${article.filename}', '${article.title.replaceAll("'", '\\\'')}')"
-             title="Click to read: ${article.title}">
-          
-          <!-- Notepad header lines -->
-          <div style="
-            border-bottom: 1px solid #333333;
-            height: 8px;
-            margin-bottom: 2px;
-          "></div>
-          <div style="
-            border-bottom: 1px solid #333333;
-            height: 8px;
-            margin-bottom: 2px;
-          "></div>
-          <div style="
-            border-bottom: 1px solid #333333;
-            height: 8px;
-            margin-bottom: 4px;
-          "></div>
-          
-          <!-- Document preview text -->
-          <div style="
-            flex: 1;
-            font-size: 6px;
-            line-height: 1.2;
-            color: #99ccff;
-            overflow: hidden;
-            font-family: 'Space Mono', monospace;
-          ">
-            ${article.title.substring(0, 40)}...
-          </div>
-          
-          <!-- File icon and name -->
-          <div style="
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 4px;
-            font-size: 7px;
-            color: #66aaff;
-            font-family: 'Space Mono', monospace;
-          ">
-            📄 ${article.filename.substring(0, 8)}...
-          </div>
-        </div>
-      `;
-    }).join('');
-
     return `
       <div id="releases-container" style="background: #0a0a0a;">
         <div style="border: 1px inset #333333; padding: 8px; margin-bottom: 8px; background: #0a0a0a; color: #99ccff;">
@@ -4229,7 +4123,7 @@ export class App {
             Collection of research documents through time and from around the globe, exploring the intersection of sound science, tech, subcultures, humanities, and future methodologies in art.
           </p>
           <p style="margin: 0; font-size: 10px; color: #66aaff;">
-            Click any document thumbnail to open in text viewer.
+            Click any PDF document thumbnail to view paper.
           </p>
         </div>
         
@@ -4245,10 +4139,9 @@ export class App {
           overflow-y: auto;
           gap: 4px;
         ">
-          ${thumbnailsHTML}
         </div>
         
-        <div style="
+        <div id="releases-footer-info" style="
           border: 1px inset #333333;
           margin-top: 8px;
           background: #1a1a1a;
@@ -4256,7 +4149,7 @@ export class App {
           font-size: 10px;
           color: #99ccff;
         ">
-          <strong>Navigation:</strong> Click any document to read • Press ESC or close button to return • ${docArticles.length} papers available
+          <strong>Navigation:</strong> Click any document to view • Press ESC or close button to return • PDF Papers
         </div>
       </div>
     `;
@@ -4743,62 +4636,69 @@ export class App {
     try {
       console.log('📚 Loading PDF research papers from Google Drive...');
       
-      // Real PDF papers from the research folder
+      // Real PDF papers from the local public/docs folder
       const pdfPapers = [
         {
           filename: 'Anthropological Theory of Praxis.pdf',
           title: 'Anthropological Theory of Praxis',
           description: 'Research paper',
-          url: './docs/Anthropological Theory of Praxis.pdf',
+          url: './public/docs/Anthropological Theory of Praxis.pdf',
           thumbnail: null
         },
         {
           filename: 'Kerala Sound Electricals.pdf',
           title: 'Kerala Sound Electricals',
           description: 'Research paper',
-          url: './docs/Kerala Sound Electricals.pdf',
+          url: './public/docs/Kerala Sound Electricals.pdf',
           thumbnail: null
         },
         {
-          filename: 'hampshire-topping-burbano-cifuentes-aubry.pdf',
+          filename: 'Noise as a Spectre in Dub Techno.pdf',
+          title: 'Noise as a Spectre in Dub Techno',
+          description: 'Research paper',
+          url: './public/docs/Noise as a Spectre in Dub Techno.pdf',
+          thumbnail: null
+        },
+        {
+          filename: 'Hampshire.pdf',
           title: 'Hampshire Topping Burbano Cifuentes Aubry',
           description: 'Research on experimental music and sound art',
-          url: 'https://drive.google.com/file/d/1_2QgRCXMR8CNq5ghbxGahtoXOJiE2ryW/view?usp=sharing',
+          url: './public/docs/Hampshire.pdf',
           thumbnail: null
         },
         {
           filename: 'Post-Music Stephenie Egedy.pdf',
           title: 'Post-Music: Stephenie Egedy',
           description: 'Theoretical framework for post-musical composition',
-          url: 'https://drive.google.com/file/d/1ZJF3_NeCo7JurGKkywMfeRiR8HlX67pO/view?usp=sharing',
+          url: './public/docs/Post-Music Stephenie Egedy.pdf',
           thumbnail: null
         },
         {
-          filename: 'Shape_brochure_2022_2025_digi-1.pdf',
+          filename: 'Shape.pdf',
           title: 'Shape Brochure 2022-2025',
           description: 'Digital arts and experimental music festival documentation',
-          url: 'https://drive.google.com/file/d/1PsOLCd_k7st5sUC4zInComL1xrEYSdUB/view?usp=sharing',
+          url: './public/docs/Shape.pdf',
           thumbnail: null
         },
         {
           filename: 'SONIC WARFARE_ STEVE GOODMAN.pdf',
           title: 'Sonic Warfare: Steve Goodman',
           description: 'Critical analysis of sound as weapon and resistance',
-          url: 'https://drive.google.com/file/d/1nrFQ_FQFML4TwlJOth-N8SCGsRPf9MrC/view?usp=sharing',
+          url: './public/docs/SONIC WARFARE_ STEVE GOODMAN.pdf',
           thumbnail: null
         },
         {
           filename: 'Sound_system_culture_Place_space_and_identity_in_t.pdf',
           title: 'Sound System Culture: Place, Space and Identity',
           description: 'Cultural studies of sound system communities',
-          url: 'https://drive.google.com/file/d/1O3u2kJYQJlRxRvl_0uA-kqphuXOxGV2f/view?usp=sharing',
+          url: './public/docs/Sound_system_culture_Place_space_and_identity_in_t.pdf',
           thumbnail: null
         },
         {
           filename: 'WHAT_IS_BLACK_METAL_THEORY.pdf',
           title: 'What Is Black Metal Theory?',
           description: 'Philosophical and theoretical approaches to extreme music',
-          url: 'https://drive.google.com/file/d/1s-seagVZWHgQucMgu6OvItAKUvfSZ5SH/view?usp=sharing',
+          url: './public/docs/WHAT_IS_BLACK_METAL_THEORY.pdf',
           thumbnail: null
         }
       ];
@@ -4945,7 +4845,7 @@ Let's create something extraordinary together.`
    */
   updateReleasesContent() {
     const container = document.getElementById('releases-container');
-    if (!container || !this.pdfResearchPapers) return;
+    if (!container) return;
     
     const thumbnailsContainer = container.querySelector('#doc-thumbnails');
     if (!thumbnailsContainer) return;
@@ -4954,91 +4854,62 @@ Let's create something extraordinary together.`
     thumbnailsContainer.innerHTML = '';
     
     // Add PDF thumbnails
-    for (const [index, paper] of this.pdfResearchPapers.entries()) {
-      const thumbnail = document.createElement('div');
-      thumbnail.className = 'pdf-thumbnail';
-      thumbnail.style.cssText = `
-        width: 80px;
-        height: 100px;
-        border: 2px outset #555555;
-        background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-        cursor: pointer;
-        transition: all 0.2s;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 4px;
-        margin: 4px;
-        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-      `;
-      
-      thumbnail.innerHTML = `
-        <!-- Research icon -->
-        <div style="
+    if (this.pdfResearchPapers) {
+      for (const [index, paper] of this.pdfResearchPapers.entries()) {
+        const thumbnail = document.createElement('div');
+        thumbnail.className = 'pdf-thumbnail';
+        thumbnail.style.cssText = `
+          width: 80px;
+          height: 100px;
+          border: 2px outset #555555;
+          background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+          cursor: pointer;
+          transition: all 0.2s;
+          position: relative;
           display: flex;
-          align-items: center;
-          justify-content: center;
-          height: 40px;
-          width: 40px;
-        ">
-          <img src="./public/menuicons/research.png" alt="Research" style="
-            width: 32px;
-            height: 32px;
-            filter: invert(1) sepia(1) saturate(5) hue-rotate(200deg);
-          ">
-        </div>
+          flex-direction: column;
+          justify-content: space-between;
+          padding: 4px;
+          margin: 4px;
+          box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        `;
         
-        <!-- Document title -->
-        <div style="
-          flex: 1;
-          font-size: 8px;
-          line-height: 1.2;
-          color: #99ccff;
-          overflow: hidden;
-          font-family: 'Space Mono', monospace;
-          text-align: center;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        ">
-          ${paper.title}
-        </div>
+        thumbnail.innerHTML = `
+          <div style="display: flex; align-items: center; justify-content: center; height: 40px; width: 40px; margin: 0 auto;">
+            <img src="./public/menuicons/research.png" alt="Research" style="width: 32px; height: 32px; filter: invert(1) sepia(1) saturate(5) hue-rotate(200deg);">
+          </div>
+          <div style="flex: 1; font-size: 8px; line-height: 1.2; color: #99ccff; overflow: hidden; font-family: 'Space Mono', monospace; text-align: center; display: flex; align-items: center; justify-content: center;">
+            ${paper.title}
+          </div>
+          <div style="display: flex; align-items: center; justify-content: center; margin-top: 4px; font-size: 7px; color: #66aaff; font-family: 'Space Mono', monospace;">
+            PDF
+          </div>
+        `;
         
-        <!-- File type indicator -->
-        <div style="
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-top: 4px;
-          font-size: 7px;
-          color: #66aaff;
-          font-family: 'Space Mono', monospace;
-        ">
-          PDF
-        </div>
-      `;
-      
-      // Add hover effects
-      thumbnail.addEventListener('mouseenter', () => {
-        thumbnail.style.borderStyle = 'inset';
-        thumbnail.style.transform = 'scale(1.05)';
-        thumbnail.style.borderColor = "#99ccff";
-      });
-      
-      thumbnail.addEventListener('mouseleave', () => {
-        thumbnail.style.borderStyle = 'outset';
-        thumbnail.style.transform = 'scale(1)';
-        thumbnail.style.borderColor = '#555555';
-      });
-      
-      // Add click handler
-      thumbnail.addEventListener('click', () => {
-        this.openPDFDocument(paper.filename, paper.title, paper.url);
-      });
-      
-      thumbnail.title = `Click to view: ${paper.title}`;
-      thumbnailsContainer.appendChild(thumbnail);
+        thumbnail.addEventListener('mouseenter', () => {
+          thumbnail.style.borderStyle = 'inset';
+          thumbnail.style.transform = 'scale(1.05)';
+          thumbnail.style.borderColor = "#99ccff";
+        });
+        
+        thumbnail.addEventListener('mouseleave', () => {
+          thumbnail.style.borderStyle = 'outset';
+          thumbnail.style.transform = 'scale(1)';
+          thumbnail.style.borderColor = '#555555';
+        });
+        
+        thumbnail.addEventListener('click', () => {
+          this.openPDFDocument(paper.filename, paper.title, paper.url);
+        });
+        
+        thumbnail.title = `Click to view: ${paper.title}`;
+        thumbnailsContainer.appendChild(thumbnail);
+      }
+    }
+
+    const footerInfo = container.querySelector('#releases-footer-info');
+    if (footerInfo && this.pdfResearchPapers) {
+      footerInfo.innerHTML = `<strong>Navigation:</strong> Click any document to view • Press ESC or close button to return • ${this.pdfResearchPapers.length} papers available`;
     }
   }
 
@@ -5164,7 +5035,7 @@ Let's create something extraordinary together.`
         pdfViewer.src = `https://drive.google.com/file/d/${driveId}/preview`;
         console.log(`📄 Loading PDF from Google Drive: ${driveId}`);
       } else {
-        pdfViewer.src = url;
+        pdfViewer.src = encodeURI(url) + '#navpanes=0&toolbar=0&view=FitH';
         console.log(`📄 Loading PDF from URL: ${url}`);
       }
     } else {

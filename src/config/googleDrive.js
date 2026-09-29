@@ -46,7 +46,11 @@ export function getGoogleDriveFileUrl(folderName, fileName) {
 // Helper function to read text files from the public folder
 export async function readPublicFile(filePath) {
   try {
-    const response = await fetch(filePath);
+    let response = await fetch(filePath);
+    if (!response.ok && filePath.includes('public/')) {
+      const fallbackPath = filePath.replace('./public/', './').replace('public/', '');
+      response = await fetch(fallbackPath);
+    }
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
