@@ -1,21 +1,6 @@
 export class AudioPlayer {
   constructor() {
-    this.tracks = [
-      'Cinematic Nightscape.mp3',
-      'Dive into this Dreamscape.mp3',
-      'Echo Trails.mp3',
-      'Echoes in the Groove.mp3',
-      'Echoes of Tomorrow.mp3',
-      'Electric Shadows.mp3',
-      'Glitch in the Groove.mp3',
-      'Hypnotic Groove.mp3',
-      'Late Night Echoes.mp3',
-      'Melodic Echoes.mp3',
-      'Neon Echoes.mp3',
-      'Saturated Reverie.mp3',
-      'Shimmering Trails.mp3',
-      'Tension in the Air.mp3'
-    ];
+    this.tracks = Array.from({ length: 20 }, (_, i) => `47K_Phase_${String(i + 1).padStart(2, '0')}.mp3`);
     
     this.currentTrackIndex = 0;
     this.isPlaying = false;
@@ -31,8 +16,14 @@ export class AudioPlayer {
 
   loadTrack(index) {
     this.currentTrackIndex = index;
-    this.audio.src = `./public/audio/${this.tracks[this.currentTrackIndex]}`;
-    const trackName = this.tracks[this.currentTrackIndex].replace('.mp3', '');
+    const trackFile = this.tracks[this.currentTrackIndex];
+    this.audio.src = `./public/audio/${trackFile}`;
+    const trackName = trackFile.replace('.mp3', '').replace('_', ' - ');
+    
+    if (this.playBtn) {
+      this.playBtn.title = `Play / Pause (${trackName})`;
+    }
+    
     if (this.isPlaying) {
       this.audio.play().catch(e => console.error("Audio playback failed:", e));
     }
