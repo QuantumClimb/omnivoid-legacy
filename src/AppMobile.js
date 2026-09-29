@@ -4911,7 +4911,6 @@ Let's create something extraordinary together.`
       footerInfo.innerHTML = `<strong>Navigation:</strong> Click any document to view • Press ESC or close button to return • ${this.pdfResearchPapers.length} papers available`;
     }
   }
-  }
 
   /**
    * Open PDF document in viewer
