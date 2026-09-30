@@ -421,10 +421,13 @@
   }
 }
 
-/* Mobile-specific minimal controls positioning */
+/* Mobile-specific minimal controls and copyright positioning */
 @media (max-width: 767px) {
   .minimal-controls {
-    bottom: 100px !important;
+    bottom: 38px !important;
+  }
+  .permanent-footer {
+    bottom: 24px !important;
   }
 }
 

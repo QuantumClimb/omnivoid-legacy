@@ -190,95 +190,35 @@ export class App {
    * Add permanent footer with debug message and copyright info
    */
   addPermanentFooter() {
-    // Footer with copyright and powered by
     const footer = document.createElement('div');
     footer.className = 'permanent-footer';
     footer.style.cssText = `
       position: fixed;
-      bottom: 0px;
+      bottom: 24px;
       left: 0;
       right: 0;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      padding: 0 20px;
-      font-size: 10px;
+      padding: 0 10px;
+      font-size: 8px;
       color: #99ccff;
       font-family: 'Space Mono', monospace;
-      opacity: 0.8;
-      z-index: 1001;
+      opacity: 0.85;
+      z-index: 10005;
+      pointer-events: none;
+      text-align: center;
     `;
     
     // Copyright text
     const copyright = document.createElement('div');
     copyright.innerHTML = '© 2025 OMNIVOID LABS | <a href="https://royvillemedia.in/" target="_blank" style="color: #99ccff; text-decoration: none; pointer-events: auto;">ROYVILLE MEDIA</a>';
     copyright.style.cssText = `
-      font-size: 10px;
+      font-size: 8px;
       color: #99ccff;
     `;
-    
-    // Powered by QC logo
-    const poweredBy = document.createElement('div');
-    poweredBy.style.cssText = `
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    `;
-    
-    const poweredByText = document.createElement('span');
-    poweredByText.textContent = 'Powered by';
-    poweredByText.style.cssText = `
-      font-size: 10px;
-      color: #99ccff;
-    `;
-    
-    const qcLogo = document.createElement('img');
-    qcLogo.src = 'public/qc.png';
-    qcLogo.alt = 'Quantum Climb';
-    qcLogo.style.cssText = `
-      width: 54px;
-      height: 54px;
-      object-fit: contain;
-      cursor: pointer;
-    `;
-    
-    // Add click handler to open Quantum Climb website
-    qcLogo.addEventListener('click', () => {
-      window.open('https://www.quantum-climb.com/', '_blank');
-    });
-    
-    // Fallback if logo fails to load
-    qcLogo.onerror = () => {
-      qcLogo.style.display = 'none';
-      poweredByText.textContent = 'Powered by Quantum Climb';
-    };
-    
-    poweredBy.appendChild(poweredByText);
-    poweredBy.appendChild(qcLogo);
-    
-    // Mobile: stack vertically
-    if (this.detectMobile()) {
-      footer.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 5px;
-        font-size: 10px;
-        color: #99ccff;
-        font-family: 'Space Mono', monospace;
-        opacity: 0.8;
-        z-index: 1001;
-        pointer-events: none;
-        text-align: center;
-      `;
-    }
     
     footer.appendChild(copyright);
-    footer.appendChild(poweredBy);
     document.body.appendChild(footer);
   }
 
@@ -3844,6 +3784,29 @@ export class App {
               <span style="color: #66aaff; font-weight: bold;">Demos:</span> 
               <a href="mailto:demos.omnivoid@gmail.com" style="color: #99ccff; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">demos.omnivoid@gmail.com</a>
             </div>
+          </div>
+
+          <!-- Powered by Quantum Climb Section -->
+          <div style="
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: #1a1a1a;
+            border: 1px solid #333333;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'Space Mono', monospace;
+            cursor: pointer;
+            transition: all 0.2s ease;
+          " onclick="window.open('https://www.quantum-climb.com/', '_blank')" 
+             onmouseover="this.style.borderColor='#99ccff'; this.style.background='#2a2a2a'" 
+             onmouseout="this.style.borderColor='#333333'; this.style.background='#1a1a1a'">
+            <div>
+              <div style="font-size: 9px; color: #66aaff; font-weight: bold; letter-spacing: 1px;">POWERED BY</div>
+              <div style="font-size: 12px; font-weight: bold; color: #99ccff; margin-top: 2px;">Quantum Climb</div>
+            </div>
+            <img src="public/qc.png" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='qc.png';}" alt="Quantum Climb" style="width: 50px; height: 50px; object-fit: contain;">
           </div>
         </div>
         
